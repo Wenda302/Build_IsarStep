@@ -1,4 +1,4 @@
-theory Utils imports Pure
+theory ProofRecording_Utils imports Pure
 begin
 
 ML \<open>

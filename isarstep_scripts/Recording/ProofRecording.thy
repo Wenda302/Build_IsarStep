@@ -1,4 +1,4 @@
-theory ProofRecording imports Utils
+theory ProofRecording imports ProofRecording_Utils
   keywords
     "record_facts"  "@phantom" "record_all_facts" :: diag
 begin

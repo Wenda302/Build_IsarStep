@@ -115,15 +115,15 @@ IGNORED_ENTRIES = {
     'IMAP-CRDT'
 }
 
-FOCUSED_THEORIES = {
-    'HOL/Transcendental.thy',
-}
-
 FOCUSED_ENTRIES = {
+    # 'Symmetric_Polynomials',
+    # 'Polynomials',
+    # 'Abstract-Rewriting',
+    'CryptHOL',
     # 'Stone_Relation_Algebras',
     # 'Lambda_Free_KBOs',
     # 'UPF_Firewall',
-    'HOL',
+    # 'HOL',
     # 'Ordinary_Differential_Equations',
     # 'Prpu_Maxflow',
     # 'Polynomials'
