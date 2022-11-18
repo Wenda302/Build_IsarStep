@@ -13,16 +13,17 @@
     ```
         pip install tatsu algebraic-data-types regex
     ```
+2. Download [Isabelle2019](https://isabelle.in.tum.de/website-Isabelle2019/index.html) and [AFP2019](https://sourceforge.net/projects/afp/files/afp-Isabelle2019/). [Link](https://www.isa-afp.org/help/) AFP2019 properly to Isabelle2019: make sure `<path to AFP2019>/thys` is added to `~/.isabelle/Isabelle2019/ROOTS`.
 
-2. Download the [test suite of IsarStep](https://drive.google.com/file/d/1QUKC3RzzvZ5O9-VkgXx3h37heCq8OPPC/view?usp=sharing), which contains a large (about 86 GB) pre-processed repository of Isabelle proofs named ``<isar_dataset>``. We don't need the pre-processed corpus here -- we are re-processing it. If needed, I can upload an un-processed corpus later...
+3. Download the [test suite of IsarStep](https://drive.google.com/file/d/1QUKC3RzzvZ5O9-VkgXx3h37heCq8OPPC/view?usp=sharing), which contains a large (about 86 GB) pre-processed repository of Isabelle proofs named ``<isar_dataset>``. We don't need the pre-processed corpus here -- we are re-processing it. If needed, I can upload an un-processed corpus later...
 
-3. Run the following command 
+4. Run the following command 
     ```
         python build_isarstep_database.py --isa_bin <Isabelle binary> --isar_data <isar_dataset>
     ```
     where `<Isabelle binary>` should be a path to a Isabelle2019 binary (e.g., /home/wenda/Programs/Isabelle2019/bin/isabelle), and `<isar_dataset>` refers the path to the pre-processed repository in the previous step. This will take about 30-40 hours on a 90-core CPU. At the end, you will get a processed repository (still within `<isar_dataset>`) and a `<processed_id>` from the standard output.
 
-4. Run the following command 
+5. Run the following command 
     ```
         python extract_isarstep_from_database.py --dir_in <isar_dataset> --processed_id <processed_id>
     ```
