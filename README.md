@@ -20,7 +20,7 @@
     ```
         python build_isarstep_database.py --isa_bin <Isabelle binary> --isar_data <isar_dataset>
     ```
-    where `<Isabelle binary>` should be a path to the modified Isabelle2022 binary (e.g., /home/wenda/Programs/Isabelle2019_modified/bin/isabelle), and `<isar_dataset>` refers the path to the pre-processed repository in the previous step. This will take about 30-40 hours on a 90-core CPU. At the end, you will get a processed repository (still within `<isar_dataset>`) and a `<processed_id>` from the standard output.
+    where `<Isabelle binary>` should be a path to the modified Isabelle2022 binary (e.g., /home/wenda/Programs/Isabelle2022_modified/bin/isabelle), and `<isar_dataset>` refers the path to the pre-processed repository in the previous step. This will take about 30-40 hours on a 90-core CPU. At the end, you will get a processed repository (still within `<isar_dataset>`) and a `<processed_id>` from the standard output.
 
 5. Run the following command 
     ```
