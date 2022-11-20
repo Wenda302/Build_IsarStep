@@ -449,7 +449,7 @@ def anno_and_produce_examples(w_thy):
         append_to_log('Error: failed to annotate {}.\n'.format(w_thy.thy_model.full_filename))
         if hasattr(e,'output'):
             append_to_log('{}\n'.format(e.output))
-        print('Failed to annotate:' + w_thy.thy_model.full_filename)
+        print('Failed to annotate (anno_and_produce):' + w_thy.thy_model.full_filename)
         return
     # print('Start to build CausalSteps of {}'.format(w_thy.thy_model.full_filename))
     try:
@@ -620,7 +620,7 @@ class ProcessTheory:
         try:
             annotate_thy(w_thy)
         except Exception as e:
-            print('Failed to annotate:' + thy.full_filename)
+            print('Failed to annotate (process_theory):' + thy.full_filename)
             return
         
         thy.purge_diagnostic()
@@ -638,7 +638,7 @@ def anno_wrt_derivations(w_thy):
         annotate_thy(w_thy)
     except Exception as e:
         thy = w_thy.thy_model
-        print('Failed to annotate:' + thy.full_filename)
+        print('Failed to annotate (anno_wrt_deri):' + thy.full_filename)
         return
     
     print( w_thy.thy_model.get_Theorem_by_id('thm_de_Morgan9')._fact_dict.local_dict_by_location) 

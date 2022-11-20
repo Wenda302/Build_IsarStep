@@ -114,18 +114,18 @@ SML_export \<open>
 \<close>
 
 ML_val\<open>
-singleton
+fun foo x = Term_XML.Encode.term_raw x |> YXML.string_of_body
 \<close>
 
 ML \<open>
 fun yxml_of_term trm =
   let
-    val xml_body = trm |> Term_XML.Encode.term;
+    val xml_body = trm |> Term_XML.Encode.term_raw;
   in xml_body |> YXML.string_of_body end;
 
 fun xml_of_term trm = 
       let 
-        val xml_body = Term_XML.Encode.term trm;
+        val xml_body = Term_XML.Encode.term_raw trm;
         val _ = @{assert} (length xml_body = 1);
       in
         hd (xml_body) |> XML.string_of
@@ -133,7 +133,7 @@ fun xml_of_term trm =
 
 fun term_of_xml str = 
       let 
-        val trm = [str |> XML.parse] |> Term_XML.Decode.term;
+        val trm = [str |> XML.parse] |> Term_XML.Decode.term_raw;
       in
         trm
       end;
@@ -316,10 +316,13 @@ val _ =
 *)
 
 local
+(*
+val text = group (fn () => "text") (Parse.embedded || Parse.verbatim);
+*)
 
 val _ =
   Outer_Syntax.command \<^command_keyword>\<open>record_facts\<close> "record facts by name or content string"
-    (opt_attrs -- Parse.thm -- (Scan.option Parse.text) >> (fn x => let (*val _ = @{print} x*) 
+    (opt_attrs -- Parse.thm -- (Scan.option Parse.embedded) >> (fn x => let (*val _ = @{print} x*) 
         in
            (*Toplevel.keep (fn state => ()) *)
           print_facts x

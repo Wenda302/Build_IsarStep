@@ -18,8 +18,14 @@ KNOWN_FACT_COLLECTIONS = {
 # DIAG_THY_PATH = ['"'+ os.path.join(os.path.dirname(os.path.realpath(__file__)),'Recording/ProofRecording')+'"',\
 #                 '"'+ os.path.join(os.path.dirname(os.path.realpath(__file__)),'Recording/Sequence_Evaluation')+'"']
 
-DIAG_THY_PATH_RECORDING = '"'+ os.path.join(os.path.dirname(os.path.realpath(__file__)),'Recording/ProofRecording')+'"'
-DIAG_THY_PATH_EVALUATION = '"'+ os.path.join(os.path.dirname(os.path.realpath(__file__)),'Recording/Sequence_Evaluation')+'"'
+# DIAG_THY_PATH_RECORDING = '"'+ os.path.join(os.path.dirname(os.path.realpath(__file__)),'Recording/ProofRecording')+'"'
+# DIAG_THY_PATH_EVALUATION = '"'+ os.path.join(os.path.dirname(os.path.realpath(__file__)),'Recording/Sequence_Evaluation')+'"'
+
+# DIAG_THY_PATH_RECORDING = '"Recording.ProofRecording"'
+# DIAG_THY_PATH_EVALUATION = '"Recording.Sequence_Evaluation"'
+
+DIAG_THY_PATH_RECORDING = ''
+DIAG_THY_PATH_EVALUATION = ''
 
 print(DIAG_THY_PATH_EVALUATION)
 
@@ -1008,8 +1014,11 @@ def expand_Theory():
                     purge_IsarStatement(st)
 
         # self.imported_thy_names = filter(lambda x:x != '\"../Recording/ProofRecording\"', self.imported_thy_names)
+        # self.imported_thy_names = [x for x in self.imported_thy_names \
+        #     if not x.endswith('Recording/ProofRecording\"') and not x.endswith('Recording/Sequence_Evaluation\"') ]
         self.imported_thy_names = [x for x in self.imported_thy_names \
-            if not x.endswith('Recording/ProofRecording\"') and not x.endswith('Recording/Sequence_Evaluation\"') ] 
+            if not x.endswith('Recording.ProofRecording\"') and not x.endswith('Recording.Sequence_Evaluation\"') ]
+         
         for stat in self.get_all_Theorems():
             if stat.thm_stat.diag_stats is not None:
                 # purge diagnostics in theorem statements

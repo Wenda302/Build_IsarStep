@@ -96,12 +96,41 @@ def de_sort(ts):
   '''
   return xml_list(xml_string,ts)
 
+def de_indexname(tts):
+  '''
+  fun indexname [a] = (a, 0)
+    | indexname [a, b] = (a, int_atom b);
+  '''
+  if len(tts) == 1:
+    return (tts[0],0)
+  else:
+    assert len(tts) ==2
+    return (tts[0],int(tts[1]))
+
+# def de_typ(ts):
+#   '''
+#   fun typ T = T |> variant
+#   [fn ([a], b) => Type (a, list typ b),
+#     fn ([a], b) => TFree (a, sort b),
+#     fn ([a, b], c) => TVar ((a, int_atom b), sort c)];
+#   '''
+#   def f1(strs,ts):
+#     [a]=strs 
+#     return Typ.TYPE(a,xml_list(de_typ,ts))
+#   def f2(strs,ts):
+#     [a]=strs
+#     return Typ.TFREE(a,de_sort(ts))
+#   def f3(strs,ts):
+#     [a,b] = strs
+#     return Typ.TVAR((a,int(b)),de_sort(ts))
+#   return variant([f1,f2,f3],ts)
+
 def de_typ(ts):
   '''
-  fun typ T = T |> variant
+  fun typ body = body |> variant
   [fn ([a], b) => Type (a, list typ b),
     fn ([a], b) => TFree (a, sort b),
-    fn ([a, b], c) => TVar ((a, int_atom b), sort c)];
+    fn (a, b) => TVar (indexname a, sort b)];
   '''
   def f1(strs,ts):
     [a]=strs 
@@ -110,19 +139,51 @@ def de_typ(ts):
     [a]=strs
     return Typ.TFREE(a,de_sort(ts))
   def f3(strs,ts):
-    [a,b] = strs
-    return Typ.TVAR((a,int(b)),de_sort(ts))
+    return Typ.TVAR(de_indexname(strs),de_sort(ts))
   return variant([f1,f2,f3],ts)
+
+# def de_term(ts):
+#   '''
+#   fun term t = t |> variant
+#     [fn ([a], b) => Const (a, typ b),
+#       fn ([a], b) => Free (a, typ b),
+#       fn ([a, b], c) => Var ((a, int_atom b), typ c),
+#       fn ([a], []) => Bound (int_atom a),
+#       fn ([a], b) => let val (c, d) = pair typ term b in Abs (a, c, d) end,
+#       fn ([], a) => op $ (pair term term a)];
+#   '''
+#   def f1(strs,ts):
+#     [a]=strs 
+#     return Term.CONST(a, de_typ(ts))
+#   def f2(strs,ts):
+#     [a]=strs 
+#     return Term.FREE(a, de_typ(ts))
+#   def f3(strs,ts):
+#     [a,b] = strs
+#     return Term.VAR((a,int(b)),de_typ(ts))
+#   def f4(strs,ts):
+#     [a]=strs 
+#     assert ts == []
+#     return Term.BOUND(int(a))
+#   def f5(strs,ts):
+#     [a]=strs
+#     c, d = pair(de_typ,de_term,ts)
+#     return Term.ABS(a,c,d)
+#   def f6(strs,ts):
+#     assert strs == []
+#     t1,t2 = pair(de_term,de_term,ts)
+#     return Term.APP(t1,t2)
+#   return variant([f1,f2,f3,f4,f5,f6],ts)
 
 def de_term(ts):
   '''
-  fun term t = t |> variant
-    [fn ([a], b) => Const (a, typ b),
-      fn ([a], b) => Free (a, typ b),
-      fn ([a, b], c) => Var ((a, int_atom b), typ c),
-      fn ([a], []) => Bound (int_atom a),
-      fn ([a], b) => let val (c, d) = pair typ term b in Abs (a, c, d) end,
-      fn ([], a) => op $ (pair term term a)];
+  fun term_raw body = body |> variant
+ [fn ([a], b) => Const (a, typ b),
+  fn ([a], b) => Free (a, typ b),
+  fn (a, b) => Var (indexname a, typ b),
+  fn ([], a) => Bound (int a),
+  fn ([a], b) => let val (c, d) = pair typ term_raw b in Abs (a, c, d) end,
+  fn ([], a) => op $ (pair term_raw term_raw a)];
   '''
   def f1(strs,ts):
     [a]=strs 
@@ -131,12 +192,10 @@ def de_term(ts):
     [a]=strs 
     return Term.FREE(a, de_typ(ts))
   def f3(strs,ts):
-    [a,b] = strs
-    return Term.VAR((a,int(b)),de_typ(ts))
+    return Term.VAR(de_indexname(strs),de_typ(ts))
   def f4(strs,ts):
-    [a]=strs 
-    assert ts == []
-    return Term.BOUND(int(a))
+    assert strs == []
+    return Term.BOUND(int(xml_string(ts)))
   def f5(strs,ts):
     [a]=strs
     c, d = pair(de_typ,de_term,ts)

@@ -63,6 +63,9 @@ fun eval_thm_alt ctxt (fr:Facts.ref * Token.src list) =
           end)
         | _ => Attrib.eval_thms ctxt [fr])
 
+fun forall_intr_vars th = fold Thm.forall_intr 
+      (Thm.add_vars th Vars.empty |> Vars.dest |> map snd) th;
+
 fun forall_intr_vars_prop_of thm =
   let
     val pp = SOME (forall_intr_vars thm) handle _ => NONE

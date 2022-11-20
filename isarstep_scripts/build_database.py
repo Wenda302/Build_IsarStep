@@ -119,11 +119,11 @@ FOCUSED_ENTRIES = {
     # 'Symmetric_Polynomials',
     # 'Polynomials',
     # 'Abstract-Rewriting',
-    'CryptHOL',
+    # 'CryptHOL',
     # 'Stone_Relation_Algebras',
     # 'Lambda_Free_KBOs',
     # 'UPF_Firewall',
-    # 'HOL',
+    'HOL',
     # 'Ordinary_Differential_Equations',
     # 'Prpu_Maxflow',
     # 'Polynomials'
@@ -469,7 +469,7 @@ if __name__ == '__main__':
         return int("{}{}{}{}{}{}".format(now.year,now.month,now.day,now.hour,now.minute,now.second))
 
     parser = argparse.ArgumentParser(description='Preprocess Isabelle corpus')
-    parser.add_argument('--isa_bin', type=str, default='/home/wenda/Programs/Isabelle2019/bin/isabelle',
+    parser.add_argument('--isa_bin', type=str, default='/home/wenda/Programs/Isabelle2022_modified/bin/isabelle',
                         help='The path of an Isabelle2019 executable')
     parser.add_argument('--isar_data', type=str, default='./isarstep_scripts/test_isar_dataset',
                         help='The path of an Isabelle corpus')
